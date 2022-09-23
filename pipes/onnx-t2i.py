@@ -1,8 +1,8 @@
 # CUDA_VISIBLE_DEVICES=1
 # make sure you're logged in with `huggingface-cli login`
-from diffusers import FlaxStableDiffusionPipeline
+from diffusers import StableDiffusionOnnxPipeline
 
-pipe = FlaxStableDiffusionPipeline.from_pretrained(
+pipe = StableDiffusionOnnxPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4", use_auth_token=True
 )
 
