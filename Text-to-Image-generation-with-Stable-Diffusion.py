@@ -31,6 +31,3 @@ with autocast("cuda"):
     images = pipe(prompt).images
     for i, image in enumerate(images):
         image.save(f"{prompt}-{i}.png")
-import oneflow
-
-print(oneflow.randn(2, 3))
