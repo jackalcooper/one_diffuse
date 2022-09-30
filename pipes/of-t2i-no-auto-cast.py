@@ -16,6 +16,6 @@ pipe = pipe.to("cuda")
 prompt = "apple made a toaster that makes toast shaped like an apple"
 with og_torch.autocast("cuda"):
     # with torch.autocast("cuda"):
-    # images = pipe(prompt).images
+    images = pipe(prompt).images
     for i, image in enumerate(images):
         image.save(f"{prompt}-{i}.png")
