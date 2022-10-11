@@ -12,7 +12,6 @@ pipe = StableDiffusionPipeline.from_pretrained(
 )
 
 pipe = pipe.to("cuda")
-
 prompt = "apple made a toaster that makes toast shaped like an apple"
 with autocast("cuda"):
     images = pipe(prompt).images
