@@ -1,7 +1,7 @@
 # CUDA_VISIBLE_DEVICES=1
 # make sure you're logged in with `huggingface-cli login`
 import oneflow as torch
-from diffusers import OneFlowStableDiffusionPipeline, OneFlowUNet2DConditionModel
+from diffusers import OneFlowStableDiffusionPipeline
 
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
@@ -12,9 +12,8 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
 
 pipe = pipe.to("cuda")
 
-prompt = "apple made a toaster that makes toast shaped like an apple"
-
+prompt = "a photo of an astronaut riding a horse on mars"
 with torch.autocast("cuda"):
-    images = pipe(prompt, num_inference_steps=4).images
+    images = pipe(prompt).images
     for i, image in enumerate(images):
-        image.save(f"{prompt}-{i}.png")
+        image.save(f"{prompt}-of-{i}.png")
