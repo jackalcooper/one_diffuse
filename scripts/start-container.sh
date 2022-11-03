@@ -9,3 +9,4 @@ docker run --rm -it \
     -e HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN} \
     registry.cn-beijing.aliyuncs.com/oneflow/oneflow-sd:cu116 \
     bash
+# oneflowinc/oneflow-sd:cu116
