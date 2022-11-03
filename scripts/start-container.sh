@@ -7,5 +7,5 @@ docker run --rm -it \
     -w ${PWD} \
     -e HF_HOME=${HF_HOME} \
     -e HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN} \
-    registry.cn-beijing.aliyuncs.com/oneflow/sd:cu116 \
+    registry.cn-beijing.aliyuncs.com/oneflow/oneflow-sd:cu116 \
     bash
