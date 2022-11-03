@@ -21,4 +21,4 @@ args = parse_args()
 with torch.autocast("cuda"):
     images = pipe(args.prompt).images
     for i, image in enumerate(images):
-        image.save(f"{args.prompt[:20]}-{i}.png")
+        image.save(f"{args.prompt[:100]}-{i}.png")
