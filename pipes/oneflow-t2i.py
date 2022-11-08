@@ -22,8 +22,9 @@ import os
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
 with torch.autocast("cuda"):
-    for j in range(100):
-        images = pipe(args.prompt, compile_unet=True).images
+    for j in range(10):
+        prompt = args.prompt
+        images = pipe(prompt, compile_unet=True).images
         for i, image in enumerate(images):
-            dst = os.path.join(output_dir, f"{args.prompt[:100]}-{i}-{j}.png")
+            dst = os.path.join(output_dir, f"{prompt[:100]}-{j}-{i}.png")
             image.save(dst)
