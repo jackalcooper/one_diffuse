@@ -18,11 +18,12 @@ def parse_args():
     return args
 
 args = parse_args()
+import os
+output_dir = "oneflow-sd-output"
+os.makedirs(output_dir, exist_ok=True)
 with torch.autocast("cuda"):
-    images = pipe(args.prompt).images
-    images = pipe(args.prompt).images
-    images = pipe(args.prompt).images
-    images = pipe(args.prompt).images
-    images = pipe(args.prompt).images
-    for i, image in enumerate(images):
-        image.save(f"{args.prompt[:100]}-{i}.png")
+    for j in range(100):
+        images = pipe(args.prompt).images
+        for i, image in enumerate(images):
+            dst = os.path.join(output_dir, f"{args.prompt[:100]}-{i}-{j}.png")
+            image.save(dst)
