@@ -49,7 +49,7 @@ Or on the wealth of globed peonies …
             compile_unet=True,
             width=width,
             height=height,
-            num_inference_steps=21
+            num_inference_steps=20
         ).images
         print("[oneflow]", f"[{width}x{height}]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
         save_start = timer()
