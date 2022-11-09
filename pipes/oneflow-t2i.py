@@ -54,6 +54,7 @@ Or on the wealth of globed peonies …
         print("[oneflow]", f"[{width}x{height}]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
         save_start = timer()
         for i, image in enumerate(images):
-            dst = os.path.join(output_dir, f"{prompt.strip()[:100]}-{j}-{i}.png")
+            prompt = prompt.strip().replace("\n", " ")
+            dst = os.path.join(output_dir, f"{prompt[:100]}-{j}-{i}.png")
             image.save(dst)
         print("[oneflow]", "[elapsed(s)]", "[save]", f"{timer() - save_start}")
