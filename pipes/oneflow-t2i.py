@@ -2,12 +2,15 @@ import argparse
 import oneflow as torch
 from diffusers import OneFlowStableDiffusionPipeline
 import random
+from diffusers import OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler
+dpm_solver = DPMSolverMultistepScheduler.from_config("CompVis/stable-diffusion-v1-4", subfolder="scheduler")
 
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
     use_auth_token=True,
     revision="fp16",
     torch_dtype=torch.float16,
+    scheduler=dpm_solver
 )
 
 pipe = pipe.to("cuda")
@@ -39,11 +42,14 @@ Or on the wealth of globed peonies …
         pipe.set_unet_graphs_cache_size(8)
         width=random.choice([128, 256, 512])
         height=random.choice([128, 256, 512])
+        width=512
+        height=512
         images = pipe(
             prompt,
             compile_unet=True,
             width=width,
             height=height,
+            num_inference_steps=21
         ).images
         print("[oneflow]", f"[{width}x{height}]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
         save_start = timer()
