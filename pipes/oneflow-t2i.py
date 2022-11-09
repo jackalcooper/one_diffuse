@@ -1,6 +1,7 @@
 import argparse
 import oneflow as torch
 from diffusers import OneFlowStableDiffusionPipeline
+import random
 
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
@@ -35,7 +36,12 @@ Or on the rainbow of the salt sand-wave,
 Or on the wealth of globed peonies …
         """
         start = timer()
-        images = pipe(prompt, compile_unet=True).images
+        images = pipe(
+            prompt,
+            compile_unet=True,
+            width=random.choice([256, 512]),
+            height=random.choice([256, 512]),
+        ).images
         print("[oneflow]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
         save_start = timer()
         for i, image in enumerate(images):
