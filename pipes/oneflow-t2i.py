@@ -36,13 +36,16 @@ Or on the rainbow of the salt sand-wave,
 Or on the wealth of globed peonies …
         """
         start = timer()
+        pipe.set_unet_graphs_cache_size(3)
+        width=random.choice([256, 512])
+        height=random.choice([256, 512])
         images = pipe(
             prompt,
             compile_unet=True,
-            width=random.choice([256, 512]),
-            height=random.choice([256, 512]),
+            width=width,
+            height=height,
         ).images
-        print("[oneflow]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
+        print("[oneflow]", f"[{width}x{height}]", "[elapsed(s)]", "[pipe]", f"{timer() - start}")
         save_start = timer()
         for i, image in enumerate(images):
             dst = os.path.join(output_dir, f"{prompt.strip()[:100]}-{j}-{i}.png")
