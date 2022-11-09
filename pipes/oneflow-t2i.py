@@ -24,7 +24,7 @@ output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
 from timeit import default_timer as timer
 with torch.autocast("cuda"):
-    for j in range(100):
+    for j in range(1000):
         prompt = args.prompt
         prompt = """
         But when the melancholy fit shall fall
@@ -36,9 +36,9 @@ Or on the rainbow of the salt sand-wave,
 Or on the wealth of globed peonies …
         """
         start = timer()
-        pipe.set_unet_graphs_cache_size(3)
-        width=random.choice([256, 512])
-        height=random.choice([256, 512])
+        pipe.set_unet_graphs_cache_size(8)
+        width=random.choice([128, 256, 512])
+        height=random.choice([128, 256, 512])
         images = pipe(
             prompt,
             compile_unet=True,
