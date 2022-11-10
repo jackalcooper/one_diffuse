@@ -5,8 +5,9 @@ import random
 from diffusers import OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler
 dpm_solver = DPMSolverMultistepScheduler.from_config("CompVis/stable-diffusion-v1-4", subfolder="scheduler")
 
+model = "CompVis/stable-diffusion-v1-4"
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
-    "CompVis/stable-diffusion-v1-4",
+    model,
     use_auth_token=True,
     revision="fp16",
     torch_dtype=torch.float16,
@@ -32,6 +33,7 @@ with torch.autocast("cuda"):
         prompt = """
 We can use technology to help people like Kevin. ‘ thomaswievegg by Pinturas-de-robots-solitarios-contemplando-el-mundo (1) matt dixon surrealista triste Character Concept, Concept Art, Character Design, 3d Character, Arte Cyberpunk, Arte Robot, Steampunk, Sci Fi Art, Whimsical Art
         """
+        prompt = "a salmon swimming down a river"
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
         width=random.choice([128, 256, 512])
