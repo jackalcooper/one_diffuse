@@ -30,13 +30,7 @@ with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
         prompt = """
-        But when the melancholy fit shall fall
-Sudden from heaven like a weeping cloud,
-That fosters the droop-headed flowers all,
-And hides the green hill in an April shroud;
-Then glut thy sorrow on a morning rose,
-Or on the rainbow of the salt sand-wave,
-Or on the wealth of globed peonies …
+We can use technology to help people like Kevin. ‘ thomaswievegg by Pinturas-de-robots-solitarios-contemplando-el-mundo (1) matt dixon surrealista triste Character Concept, Concept Art, Character Design, 3d Character, Arte Cyberpunk, Arte Robot, Steampunk, Sci Fi Art, Whimsical Art
         """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
