@@ -31,9 +31,8 @@ with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
         prompt = """
-We can use technology to help people like Kevin. ‘ thomaswievegg by Pinturas-de-robots-solitarios-contemplando-el-mundo (1) matt dixon surrealista triste Character Concept, Concept Art, Character Design, 3d Character, Arte Cyberpunk, Arte Robot, Steampunk, Sci Fi Art, Whimsical Art
+Lucy in the sky with diamonds
         """
-        prompt = "a salmon swimming down a river"
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
         width=random.choice([128, 256, 512])
