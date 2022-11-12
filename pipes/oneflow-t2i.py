@@ -34,6 +34,7 @@ import os
 
 os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
 os.environ["ONEFLOW_MLIR_CSE"] = "1"
+os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
 
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
