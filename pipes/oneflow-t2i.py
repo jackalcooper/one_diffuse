@@ -33,7 +33,6 @@ args = parse_args()
 import os
 
 os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
-os.environ["ONEFLOW_MLIR_CSE"] = "1"
 os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
 
 output_dir = "oneflow-sd-output"
@@ -52,15 +51,16 @@ with torch.autocast("cuda"):
         height = random.choice([128, 256, 512])
         width = 512
         height = 512
-        num_inference_steps = 50
+        num_inference_steps = 25
         if isinstance(pipe.scheduler, DPMSolverMultistepScheduler):
             num_inference_steps = 20
         images = pipe(
             prompt,
-            compile_unet=True,
             width=width,
             height=height,
             num_inference_steps=num_inference_steps,
+            compile_unet=True,
+            unrolled_timesteps=True,
         ).images
         print(
             "[oneflow]",
