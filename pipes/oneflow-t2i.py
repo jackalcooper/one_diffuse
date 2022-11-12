@@ -51,6 +51,7 @@ with torch.autocast("cuda"):
         height = random.choice([128, 256, 512])
         width = 512
         height = 512
+        num_inference_steps = 50
         if isinstance(pipe.scheduler, DPMSolverMultistepScheduler):
             num_inference_steps = 20
         images = pipe(
