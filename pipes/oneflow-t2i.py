@@ -42,9 +42,9 @@ from timeit import default_timer as timer
 with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
-        prompt = """
-Lucy in the sky with diamonds
-        """
+        #         prompt = """
+        # Lucy in the sky with diamonds
+        #         """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
         width = random.choice([128, 256, 512])
