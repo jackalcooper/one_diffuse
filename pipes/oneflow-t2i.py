@@ -14,7 +14,7 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     use_auth_token=True,
     revision="fp16",
     torch_dtype=torch.float16,
-    # scheduler=dpm_solver,
+    scheduler=dpm_solver,
 )
 
 pipe = pipe.to("cuda")
@@ -34,6 +34,8 @@ import os
 
 os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
 os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
+os.environ["ONEFLOW_MLIR_CSE"] = "1"
+os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
 
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
@@ -60,7 +62,7 @@ with torch.autocast("cuda"):
             height=height,
             num_inference_steps=num_inference_steps,
             compile_unet=True,
-            unrolled_timesteps=True,
+            # unrolled_timesteps=True,
         ).images
         print(
             "[oneflow]",
