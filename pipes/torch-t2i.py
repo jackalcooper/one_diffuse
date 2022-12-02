@@ -15,5 +15,9 @@ pipe = pipe.to("cuda")
 prompt = "a photo of an astronaut riding a horse on mars"
 with autocast("cuda"):
     images = pipe(prompt).images
+    images = pipe(prompt).images
+    images = pipe(prompt).images
+    images = pipe(prompt).images
+    images = pipe(prompt).images
     for i, image in enumerate(images):
         image.save(f"{prompt}-{i}.png")
