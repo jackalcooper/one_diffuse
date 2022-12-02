@@ -8,7 +8,7 @@ from diffusers import (
     OneFlowStableDiffusionImg2ImgPipeline as StableDiffusionImg2ImgPipeline,
 )
 
-init_image = Image.open("WechatIMG3270.jpeg").convert("RGB")
+init_image = Image.open("sketch-mountains-input.jpg").convert("RGB")
 init_image = init_image.resize((768, 512))
 
 # load the pipeline
@@ -31,7 +31,7 @@ os.environ["ONEFLOW_MLIR_CSE"] = "1"
 os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
 os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
 
-prompt = "A phone riding on a duck"
+prompt = "A fantasy landscape, trending on artstation"
 
 with autocast("cuda"):
     images = pipe(
