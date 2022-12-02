@@ -8,6 +8,7 @@ pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, re
 pipe = pipe.to("cuda")
 
 prompt = "a photo of an astronaut riding a horse on mars"
-image = pipe(prompt, height=768, width=768).images[0]
-
-image.save("astronaut_rides_horse.png")
+for i in range(1000):
+    # image = pipe(prompt, height=768, width=768).images[0]
+    image = pipe(prompt, height=512, width=512).images[0]
+    image.save("astronaut_rides_horse.png")
