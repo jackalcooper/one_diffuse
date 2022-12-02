@@ -3,8 +3,12 @@ import oneflow as torch
 from diffusers import OneFlowStableDiffusionPipeline
 import random
 from diffusers import OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler
+from diffusers import OneFlowDDPMScheduler as DDPMScheduler
 
 dpm_solver = DPMSolverMultistepScheduler.from_config(
+    "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
+)
+ddpm = DDPMScheduler.from_config(
     "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
 )
 
@@ -14,7 +18,8 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     use_auth_token=True,
     revision="fp16",
     torch_dtype=torch.float16,
-    scheduler=dpm_solver,
+    # scheduler=dpm_solver,
+    # scheduler=ddpm,
 )
 
 pipe = pipe.to("cuda")
@@ -45,9 +50,9 @@ from timeit import default_timer as timer
 with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
-        #         prompt = """
-        # Lucy in the sky with diamonds
-        #         """
+        prompt = """
+        a dog, baroque painting, beautiful detailed intricate insanely detailed octane render trending on artstation, 8 k artistic photography, photorealistic, soft natural volumetric cinematic perfect light, chiaroscuro, award - winning photograph
+        """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
         width = random.choice([128, 256, 512])
@@ -63,6 +68,7 @@ with torch.autocast("cuda"):
             height=height,
             num_inference_steps=num_inference_steps,
             compile_unet=True,
+            # compile_vae=False,
             # unrolled_timesteps=True,
         ).images
         print(
