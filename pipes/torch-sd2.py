@@ -1,5 +1,5 @@
-import oneflow as torch
-from diffusers import OneFlowStableDiffusionPipeline as StableDiffusionPipeline, OneFlowEulerDiscreteScheduler as EulerDiscreteScheduler
+import torch
+from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 model_id = "stabilityai/stable-diffusion-2"
 
 # Use the Euler scheduler here instead
