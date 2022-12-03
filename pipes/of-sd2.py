@@ -8,13 +8,6 @@ pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, re
 pipe = pipe.to("cuda")
 
 prompt = "a photo of an astronaut riding a horse on mars"
-import os
-output_dir = "oneflow-sd-output"
-os.makedirs(output_dir, exist_ok=True)
-with torch.autocast("cuda"):
-    for j in range(1000):
-        images = pipe(prompt, height=768, width=768).images
-        for i, image in enumerate(images):
-            prompt = prompt.strip().replace("\n", " ")
-            dst = os.path.join(output_dir, f"{prompt[:100]}-{j}-{i}.png")
-            image.save(dst)
+image = pipe(prompt, height=768, width=768).images[0]
+
+image.save("astronaut_rides_horse.png")

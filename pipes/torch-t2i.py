@@ -19,5 +19,7 @@ with autocast("cuda"):
     images = pipe(prompt).images
     images = pipe(prompt).images
     images = pipe(prompt).images
-    for i, image in enumerate(images):
-        image.save(f"{prompt}-{i}.png")
+    for i in range(1000):
+        images = pipe(prompt).images
+        for i, image in enumerate(images):
+            image.save(f"{prompt}-{i}.png")
