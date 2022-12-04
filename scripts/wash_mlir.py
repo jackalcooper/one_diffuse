@@ -23,6 +23,7 @@ else:
 txt = re.sub("%[a-zA-Z_0-9#]+", "%VALUE", txt)
 txt = re.sub("output_lbns = \[.+?\]", "OUTPUT_LBNS", txt)
 txt = re.sub("op_name = \".+?\"", "OP_NAME", txt)
+txt = re.sub("scope_symbol_id = \d.+ : i64", "SCOPE_SYMBOL_ID", txt)
 f = open(args.output, "w")
 f.write(txt)
 f.close()
