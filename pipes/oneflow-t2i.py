@@ -23,7 +23,9 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
 )
 
 pipe = pipe.to("cuda")
-
+def dummy(images, **kwargs):
+    return images, False
+# pipe.safety_checker = dummy
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Simple demo of image generation.")
@@ -43,6 +45,9 @@ os.environ["ONEFLOW_MLIR_CSE"] = "1"
 os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
 os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
 
+os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+os.environ["ONEFLOW_KERNEL_EANBLE_DUAL_GEMM_GLU"] = "1"
+
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
 from timeit import default_timer as timer
@@ -50,9 +55,9 @@ from timeit import default_timer as timer
 with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
-        prompt = """
-        a dog, baroque painting, beautiful detailed intricate insanely detailed octane render trending on artstation, 8 k artistic photography, photorealistic, soft natural volumetric cinematic perfect light, chiaroscuro, award - winning photograph
-        """
+        # prompt = """
+        # a dog, baroque painting, beautiful detailed intricate insanely detailed octane render trending on artstation, 8 k artistic photography, photorealistic, soft natural volumetric cinematic perfect light, chiaroscuro, award - winning photograph
+        # """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
         width = random.choice([128, 256, 512])
