@@ -19,7 +19,7 @@ def replace(txt):
 if not os.isatty(sys.stdin.fileno()):
     txt = sys.stdin.readlines()
     txt = [replace(x) for x in txt]
-    txt = sorted(txt)
+    # txt = sorted(txt)
     txt = "".join(txt)
 else:
     print("Skip, so it doesn't hang")
