@@ -9,8 +9,8 @@ parser.add_argument('--output', type=str, required=True)
 args = parser.parse_args()
 
 def replace(txt):
-    txt = re.sub("%[0-9#]+", "%VALUE", txt)
-    txt = re.sub("%([a-zA-Z_]+)[0-9#]+", "%\\1", txt)
+    # txt = re.sub("%[0-9#]+", "%VALUE", txt)
+    # txt = re.sub("%([a-zA-Z_]+)[0-9#]+", "%\\1", txt)
     txt = re.sub("output_lbns = \[.+?\]", "OUTPUT_LBNS", txt)
     txt = re.sub("op_name = \".+?\"", "OP_NAME", txt)
     txt = re.sub("scope_symbol_id = \d.+ : i64", "SCOPE_SYMBOL_ID", txt)
@@ -18,7 +18,7 @@ def replace(txt):
 
 if not os.isatty(sys.stdin.fileno()):
     txt = sys.stdin.readlines()
-    txt = [replace(x) for x in txt]
+    txt = [replace(x) for x in txt if "expand" in x]
     # txt = sorted(txt)
     txt = "".join(txt)
 else:
