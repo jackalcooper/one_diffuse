@@ -36,7 +36,7 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     revision="fp16",
     torch_dtype=torch.float16,
     # scheduler=dpm_solver,
-    scheduler=ddpm,
+    # scheduler=ddpm,
     safety_checker=None
 )
 
