@@ -41,7 +41,7 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
 pipe = pipe.to("cuda")
 def dummy(images, **kwargs):
     return images, False
-pipe.safety_checker = dummy
+# pipe.safety_checker = dummy
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Simple demo of image generation.")
