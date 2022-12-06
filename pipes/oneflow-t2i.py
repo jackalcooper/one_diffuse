@@ -5,6 +5,22 @@ import random
 from diffusers import OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler
 from diffusers import OneFlowDDPMScheduler as DDPMScheduler
 
+import os
+os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
+os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
+os.environ["ONEFLOW_MLIR_CSE"] = "1"
+os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
+os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
+
+os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+os.environ["ONEFLOW_KERNEL_EANBLE_DUAL_GEMM_GLU"] = "1"
+
+os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
+os.environ["ONEFLOW_MLIR_CSE"] = "1"
+os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
+os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+os.environ["ONEFLOW_KERENL_ENABLE_TRT_FLASH_ATTN_IMPL"] = "1"
+
 dpm_solver = DPMSolverMultistepScheduler.from_config(
     "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
 )
@@ -25,7 +41,7 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
 pipe = pipe.to("cuda")
 def dummy(images, **kwargs):
     return images, False
-# pipe.safety_checker = dummy
+pipe.safety_checker = dummy
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Simple demo of image generation.")
@@ -37,16 +53,6 @@ def parse_args():
 
 
 args = parse_args()
-import os
-
-os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
-os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
-os.environ["ONEFLOW_MLIR_CSE"] = "1"
-os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
-os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
-
-os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
-os.environ["ONEFLOW_KERNEL_EANBLE_DUAL_GEMM_GLU"] = "1"
 
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
@@ -73,6 +79,7 @@ with torch.autocast("cuda"):
             height=height,
             num_inference_steps=num_inference_steps,
             compile_unet=True,
+            # compile_unet=False,
             # compile_vae=False,
             # unrolled_timesteps=True,
         ).images
