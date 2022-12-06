@@ -20,6 +20,7 @@ os.environ["ONEFLOW_MLIR_CSE"] = "1"
 os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
 os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
 os.environ["ONEFLOW_KERENL_ENABLE_TRT_FLASH_ATTN_IMPL"] = "1"
+os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
 
 dpm_solver = DPMSolverMultistepScheduler.from_config(
     "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
@@ -35,7 +36,8 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     revision="fp16",
     torch_dtype=torch.float16,
     # scheduler=dpm_solver,
-    # scheduler=ddpm,
+    scheduler=ddpm,
+    safety_checker=None
 )
 
 pipe = pipe.to("cuda")
