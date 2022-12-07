@@ -59,7 +59,8 @@ args = parse_args()
 output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
 from timeit import default_timer as timer
-
+import diffusers
+diffusers.logging.set_verbosity_info()
 with torch.autocast("cuda"):
     for j in range(1000):
         prompt = args.prompt
