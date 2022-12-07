@@ -68,8 +68,8 @@ with torch.autocast("cuda"):
         # """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
-        width = random.choice([128, 256, 512])
-        height = random.choice([128, 256, 512])
+        width = random.choice([128, 256, 512, 768])
+        height = random.choice([128, 256, 512, 768])
         width = 512
         height = 512
         num_inference_steps = 50
