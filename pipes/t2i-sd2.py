@@ -3,6 +3,7 @@ from diffusers import (
     OneFlowStableDiffusionPipeline as StableDiffusionPipeline,
     OneFlowEulerDiscreteScheduler as EulerDiscreteScheduler,
 )
+import random
 
 model_id = "stabilityai/stable-diffusion-2"
 
