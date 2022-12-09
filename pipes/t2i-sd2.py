@@ -29,7 +29,13 @@ os.environ["ONEFLOW_KERENL_ENABLE_TRT_FLASH_ATTN_IMPL"] = "1"
 
 with torch.autocast("cuda"):
     for j in range(1000):
-        images = pipe(prompt, height=768, width=768).images
+        pipe.set_unet_graphs_cache_size(8)
+        width = random.choice([128, 256, 512, 768])
+        height = random.choice([128, 256, 512, 768])
+        width =768+128*random.choice([0,1,2])
+        height =768+128*random.choice([0,1,2])
+        images = pipe(prompt, height=height, width=width).images
+        # images = pipe(prompt, height=768, width=768).images
         # images = pipe(prompt, height=512, width=512).images
         for i, image in enumerate(images):
             prompt = prompt.strip().replace("\n", " ")
