@@ -71,8 +71,14 @@ with torch.autocast("cuda"):
         pipe.set_unet_graphs_cache_size(8)
         width = random.choice([128, 256, 512, 768])
         height = random.choice([128, 256, 512, 768])
-        width = 512
-        height = 512
+        i = random.choice([0,1,2])
+        j = random.choice([0,1,2])
+        width =768+128*i
+        height =768+128*j
+        num_images_per_prompt = 1
+        # num_images_per_prompt = random.choice([1, 2, 3, 4])
+        # width = 512
+        # height = 512
         num_inference_steps = 50
         if isinstance(pipe.scheduler, DPMSolverMultistepScheduler):
             num_inference_steps = 20
@@ -81,6 +87,7 @@ with torch.autocast("cuda"):
             width=width,
             height=height,
             num_inference_steps=num_inference_steps,
+            num_images_per_prompt=num_images_per_prompt,
             compile_unet=True,
             # compile_unet=False,
             # compile_vae=False,
