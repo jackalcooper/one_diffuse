@@ -36,7 +36,7 @@ prompt = "A fantasy landscape, trending on artstation"
 with autocast("cuda"):
     images = pipe(
         prompt=prompt,
-        init_image=init_image,
+        image=image,
         strength=0.75,
         guidance_scale=7.5,
         compile_unet=True,
