@@ -1,3 +1,26 @@
+import os
+
+os.environ["ONEFLOW_MLIR_CSE"] = "1"
+os.environ["ONEFLOW_MLIR_ENABLE_INFERENCE_OPTIMIZATION"] = "1"
+os.environ["ONEFLOW_MLIR_ENABLE_ROUND_TRIP"] = "1"
+os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
+os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
+os.environ["ONEFLOW_MLIR_PREFER_NHWC"] = "1"
+
+os.environ["ONEFLOW_KERNEL_ENABLE_FUSED_CONV_BIAS"] = "1"
+os.environ["ONEFLOW_KERNEL_ENABLE_FUSED_LINEAR"] = "1"
+
+os.environ["ONEFLOW_KERENL_CONV_ENABLE_CUTLASS_IMPL"] = "1"
+os.environ["ONEFLOW_KERENL_FMHA_ENABLE_TRT_FLASH_ATTN_IMPL"] = "1"
+os.environ["ONEFLOW_KERNEL_GLU_ENABLE_DUAL_GEMM_IMPL"] = "1"
+
+os.environ["ONEFLOW_CONV_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+
+
+os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
+os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
+
 import argparse
 import oneflow as torch
 from diffusers import OneFlowStableDiffusionPipeline
@@ -5,29 +28,11 @@ import random
 from diffusers import OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler
 from diffusers import OneFlowDDPMScheduler as DDPMScheduler
 
-import os
-os.environ["ONEFLOW_MLIR_ENABLE_TIMING"] = "1"
-os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
-os.environ["ONEFLOW_MLIR_CSE"] = "1"
-os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
-os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
-
-os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
-os.environ["ONEFLOW_KERNEL_EANBLE_DUAL_GEMM_GLU"] = "1"
-
-os.environ["ONEFLOW_MLIR_GROUP_MATMUL"] = "1"
-os.environ["ONEFLOW_MLIR_CSE"] = "1"
-os.environ["ONEFLOW_MLIR_FUSE_FORWARD_OPS"] = "1"
-os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
-os.environ["ONEFLOW_KERENL_ENABLE_TRT_FLASH_ATTN_IMPL"] = "1"
-os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
 
 dpm_solver = DPMSolverMultistepScheduler.from_config(
     "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
 )
-ddpm = DDPMScheduler.from_config(
-    "CompVis/stable-diffusion-v1-4", subfolder="scheduler"
-)
+ddpm = DDPMScheduler.from_config("CompVis/stable-diffusion-v1-4", subfolder="scheduler")
 
 model = "CompVis/stable-diffusion-v1-4"
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
@@ -37,13 +42,18 @@ pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     torch_dtype=torch.float16,
     # scheduler=dpm_solver,
     # scheduler=ddpm,
-    safety_checker=None
+    safety_checker=None,
 )
 
 pipe = pipe.to("cuda")
+
+
 def dummy(images, **kwargs):
     return images, False
+
+
 # pipe.safety_checker = dummy
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Simple demo of image generation.")
@@ -60,6 +70,7 @@ output_dir = "oneflow-sd-output"
 os.makedirs(output_dir, exist_ok=True)
 from timeit import default_timer as timer
 import diffusers
+
 diffusers.logging.set_verbosity_info()
 with torch.autocast("cuda"):
     for j in range(1000):
