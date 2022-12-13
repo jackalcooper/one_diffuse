@@ -69,10 +69,10 @@ with torch.autocast("cuda"):
         # """
         start = timer()
         pipe.set_unet_graphs_cache_size(8)
-        width = random.choice([128, 256, 512, 768])
-        height = random.choice([128, 256, 512, 768])
-        width =768+128*random.choice([0,1,2])
-        height =768+128*random.choice([0,1,2])
+        # width = random.choice([128, 256, 512, 768])
+        # height = random.choice([128, 256, 512, 768])
+        # width =768+128*random.choice([0,1,2])
+        # height =768+128*random.choice([0,1,2])
         num_images_per_prompt = 1
         # num_images_per_prompt = random.choice([1, 2, 3, 4])
         # width = 512
