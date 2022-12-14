@@ -25,6 +25,7 @@ from diffusers import (
 import random
 
 model_id = "stabilityai/stable-diffusion-2"
+model_id = "stabilityai/stable-diffusion-2-1"
 
 # Use the Euler scheduler here instead
 scheduler = EulerDiscreteScheduler.from_pretrained(model_id, subfolder="scheduler")
@@ -48,10 +49,13 @@ with torch.autocast("cuda"):
         height = random.choice([128, 256, 512, 768])
         width = 768 + 128 * random.choice([0, 1, 2])
         height = 768 + 128 * random.choice([0, 1, 2])
+        height = 768
+        width = 768
         images = pipe(prompt, height=height, width=width).images
         # images = pipe(prompt, height=768, width=768).images
         # images = pipe(prompt, height=512, width=512).images
         for i, image in enumerate(images):
             prompt = prompt.strip().replace("\n", " ")
-            dst = os.path.join(output_dir, f"{prompt[:100]}-{j}-{i}.png")
+            sanitized = model_id.replace("/", "-")
+            dst = os.path.join(output_dir, f"{prompt[:100]}-{j}-{i}-{sanitized}.png")
             image.save(dst)
