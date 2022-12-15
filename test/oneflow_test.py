@@ -1,4 +1,12 @@
+import os
+
+# os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
+os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
+
 import oneflow as torch
+import diffusers
+
+diffusers.logging.set_verbosity_info()
 from diffusers import (
     OneFlowDPMSolverMultistepScheduler as DPMSolverMultistepScheduler,
     OneFlowStableDiffusionPipeline as StableDiffusionPipeline,
@@ -8,11 +16,18 @@ from diffusers import (
 model_id = "CompVis/stable-diffusion-v1-4"
 dpm_solver = DPMSolverMultistepScheduler.from_config(model_id, subfolder="scheduler")
 pipe = StableDiffusionPipeline.from_pretrained(
-    model_id, torch_dtype=torch.float16, scheduler=dpm_solver, revision="fp16",             safety_checker=None
+    model_id,
+    torch_dtype=torch.float16,
+    scheduler=dpm_solver,
+    revision="fp16",
+    safety_checker=None,
 )
 pipe.set_unet_graphs_cache_size(8)
 pipe = pipe.to("cuda")
+
 from timeit import default_timer as timer
+
+
 def run():
     with torch.autocast("cuda"):
         args = [
@@ -24,6 +39,23 @@ def run():
                 "init_image": "",
                 "model": "anime",
                 "negative_prompt": "",
+                "prompt": "(a country mouse and a city mouse )",
+                "safety_checker": True,
+                "seed": 0,
+                "steps": 15,
+                "strength": 0.5,
+                "upscale_factor": 2,
+                "version": "1.0",
+                "width": 512,
+            },
+            {
+                "count": 1,
+                "face_enhance": False,
+                "guid_scale": 7.5,
+                "height": 512,
+                "init_image": "",
+                "model": "anime",
+                "negative_prompt": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name,bad feet,cropped,bad hands, missing arms, long neck, Humpbacked,large breasts,Low facial detail",
                 "prompt": "(a country mouse and a city mouse )",
                 "safety_checker": True,
                 "seed": 0,
@@ -62,7 +94,8 @@ def run():
             print(len(images))
             # images[0].save(f"i.png")
 
-for i in range(1000):
+
+for i in range(2):
     start = timer()
     run()
     print("[ela]", timer() - start)
