@@ -42,9 +42,9 @@ os.makedirs(output_dir, exist_ok=True)
 
 os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
 os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
+pipe.set_unet_graphs_cache_size(8)
 with torch.autocast("cuda"):
     for j in range(1000):
-        pipe.set_unet_graphs_cache_size(8)
         width = random.choice([128, 256, 512, 768])
         height = random.choice([128, 256, 512, 768])
         width = 768 + 128 * random.choice([0, 1, 2])
