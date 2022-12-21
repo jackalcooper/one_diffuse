@@ -16,6 +16,7 @@ os.environ["ONEFLOW_KERNEL_GLU_ENABLE_DUAL_GEMM_IMPL"] = "1"
 
 os.environ["ONEFLOW_CONV_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
 os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
+os.environ["ONEFLOW_KERENL_CONV_CUTLASS_IMPL_ENABLE_TUNING_WARMUP"] = "1"
 
 import oneflow as torch
 from diffusers import (
@@ -23,7 +24,9 @@ from diffusers import (
     OneFlowEulerDiscreteScheduler as EulerDiscreteScheduler,
 )
 import random
+import diffusers
 
+diffusers.logging.set_verbosity_info()
 model_id = "stabilityai/stable-diffusion-2"
 model_id = "stabilityai/stable-diffusion-2-1"
 
