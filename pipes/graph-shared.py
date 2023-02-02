@@ -85,8 +85,6 @@ def do_infer(n):
                 pipe.set_unet_graphs_cache_size(10)
                 width = 768 + 128 * i
                 height = 768 + 128 * j
-                num_images_per_prompt = 1
-                # num_images_per_prompt = random.choice([1, 2, 3, 4])
                 num_inference_steps = 50
                 if isinstance(pipe.scheduler, DPMSolverMultistepScheduler):
                     num_inference_steps = 20
