@@ -100,7 +100,9 @@ def do_infer(n):
                 save_start = timer()
                 for i, image in enumerate(images):
                     prompt = prompt.strip().replace("\n", " ")
-                    dst = os.path.join(output_dir, f"{prompt[:100]}-{n}-{j}-{i}.png")
+                    dst = os.path.join(
+                        output_dir, f"{prompt[:100]}-{n}-{width}-{height}.png"
+                    )
                     image.save(dst)
                 print("[oneflow]", "[elapsed(s)]", "[save]", f"{timer() - save_start}")
 
