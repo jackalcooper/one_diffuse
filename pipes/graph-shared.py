@@ -71,16 +71,18 @@ os.makedirs(output_dir, exist_ok=True)
 from timeit import default_timer as timer
 import diffusers
 
+pipe.set_unet_graphs_cache_size(10)
+
 
 def do_infer(n):
     with torch.autocast("cuda"):
         for i in [2, 1, 0]:
             for j in [2, 1, 0]:
-                prompt = args.prompt
-                start = timer()
-                pipe.set_unet_graphs_cache_size(10)
                 width = 768 + 128 * i
                 height = 768 + 128 * j
+                prompt = args.prompt
+                start = timer()
+
                 num_inference_steps = 50
                 if isinstance(pipe.scheduler, DPMSolverMultistepScheduler):
                     num_inference_steps = 20
