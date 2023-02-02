@@ -52,6 +52,7 @@ os.makedirs(output_dir, exist_ok=True)
 # Note: enable graph cache
 pipe.set_unet_graphs_cache_size(10)
 pipe.enable_graph_share_mem()
+pipe.enable_save_graph()
 
 
 def do_infer(n):
