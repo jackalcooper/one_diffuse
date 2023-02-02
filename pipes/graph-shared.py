@@ -21,10 +21,6 @@ os.environ["ONEFLOW_MATMUL_ALLOW_HALF_PRECISION_ACCUMULATION"] = "1"
 os.environ["ONEFLOW_MLIR_PRINT_STATS"] = "1"
 os.environ["ONEFLOW_NNGRAPH_ENABLE_PROGRESS_BAR"] = "1"
 
-# CUDA graph
-os.environ["ONEFLOW_MLIR_FUSE_KERNEL_LAUNCH"] = "1"
-os.environ["ONEFLOW_KERNEL_ENABLE_CUDA_GRAPH"] = "1"
-
 import argparse
 import oneflow as torch
 from diffusers import OneFlowStableDiffusionPipeline
