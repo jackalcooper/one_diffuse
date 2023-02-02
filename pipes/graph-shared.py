@@ -69,8 +69,9 @@ def do_infer(n):
                     image.save(dst)
 
 
-for n in range(10):
+for n in range(2):
     do_infer(n)
 if args.save:
     # Note: graph cache will be saved with the weight
+    print("start saving graph")
     pipe.save_pretrained(args.cached)
