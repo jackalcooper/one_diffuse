@@ -35,6 +35,7 @@ model = "CompVis/stable-diffusion-v1-4"
 if args.load:
     # Note: restore the cache by setting the pretrain path to a cache path
     model = args.cached
+    print(f"will load pipe from: {args.cached}")
 pipe = OneFlowStableDiffusionPipeline.from_pretrained(
     model,
     use_auth_token=True,
@@ -73,5 +74,5 @@ for n in range(2):
     do_infer(n)
 if args.save:
     # Note: graph cache will be saved with the weight
-    print("start saving graph")
+    print(f"start saving pipe to: {args.cached}")
     pipe.save_pretrained(args.cached)
